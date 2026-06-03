@@ -6,6 +6,8 @@ import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinn
 import { EsriMcpService } from '../../core/services/esri-mcp.service';
 import { MapService } from '../../core/services/map.service';
 import { GeocodingService } from '../../core/services/geocoding.service';
+import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { ChatComponent } from '../chat/chat.component';
 
 @Component({
   selector: 'app-map',
@@ -25,6 +27,11 @@ import { GeocodingService } from '../../core/services/geocoding.service';
           (searchSubmitted)="onSearch($event)"
           (searchCleared)="searchError.set(null)"
         />
+        <button
+          type="button"
+          class="btn btn-outline-secondary ms-2 flex-shrink-0"
+          aria-label="Open AI chat"
+          (click)="openChat()">💬</button>
         <div class="mt-1 d-flex align-items-center gap-2">
           <app-loading-spinner [visible]="searching()" label="Searching..." />
           @if (searchError()) {
@@ -51,6 +58,7 @@ export class MapComponent implements OnInit, OnDestroy {
   private mcpService = inject(EsriMcpService);
   private mapService = inject(MapService);
   private geocodingService = inject(GeocodingService);
+  private offcanvasService = inject(NgbOffcanvas);
 
   protected searching = signal(false);
   protected mapError = signal<string | null>(null);
@@ -63,6 +71,10 @@ export class MapComponent implements OnInit, OnDestroy {
     } catch {
       // Falls back to ArcGIS locator for geocoding
     }
+  }
+
+  openChat(): void {
+    this.offcanvasService.open(ChatComponent, { position: 'end', ariaLabelledBy: 'chat-panel-title' });
   }
 
   ngOnDestroy(): void {

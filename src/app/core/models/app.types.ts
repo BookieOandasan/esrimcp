@@ -23,6 +23,16 @@ export interface GeocodeLocationInput {
   query: string;
 }
 
+export type ChatMessageSender = 'user' | 'bot';
+export type ChatMessageStatus = 'pending' | 'success' | 'error';
+export interface ChatMessage {
+  id: string;
+  sender: ChatMessageSender;
+  text: string;
+  timestamp: Date;
+  status: ChatMessageStatus;
+}
+
 export interface McpToolLog {
   timestamp: string;
   tool: McpToolName;

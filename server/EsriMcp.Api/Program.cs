@@ -39,6 +39,18 @@ builder.Services
 var app = builder.Build();
 
 app.UseCors();
+
+// The Angular MCP SDK omits "text/event-stream" from Accept — inject it so the MCP transport accepts the request
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path.StartsWithSegments("/mcp") &&
+        !context.Request.Headers.Accept.ToString().Contains("text/event-stream"))
+    {
+        context.Request.Headers.Accept = "application/json, text/event-stream";
+    }
+    await next();
+});
+
 app.MapMcp("/mcp");
 
 app.Run();
