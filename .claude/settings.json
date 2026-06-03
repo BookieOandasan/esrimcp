@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(& \"d:\\\\github\\\\esrimcp\\\\.specify\\\\extensions\\\\git\\\\scripts\\\\powershell\\\\initialize-repo.ps1\")",
+      "PowerShell(& \"d:\\\\github\\\\esrimcp\\\\.specify\\\\extensions\\\\git\\\\scripts\\\\powershell\\\\create-new-feature.ps1\" -Json -ShortName \"angular-esri-mcp\" \"create angular webapp with ESRI MCP component\")",
+      "PowerShell(& \"d:\\\\github\\\\esrimcp\\\\.specify\\\\scripts\\\\powershell\\\\setup-plan.ps1\" -Json)",
+      "PowerShell(& \"d:\\\\github\\\\esrimcp\\\\.specify\\\\scripts\\\\powershell\\\\check-prerequisites.ps1\" -Json -RequireTasks -IncludeTasks)",
+      "PowerShell(& \"d:\\\\github\\\\esrimcp\\\\.specify\\\\scripts\\\\powershell\\\\check-prerequisites.ps1\" -Json)",
+      "Bash(npm install *)",
+      "Bash(ng build *)",
+      "Bash(node screenshot.mjs)",
+      "Read(//c/Users/Booki/AppData/Local/Temp/**)",
+      "Bash(curl -s http://localhost:4200)",
+      "Bash(curl -s http://localhost:4200/main.js)",
+      "Bash(curl -s \"http://localhost:4200/@fs/d:/github/esrimcp/src/app/core/services/geocoding.service.ts\")",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(node test-search.mjs)",
+      "Bash(curl -s \"http://localhost:4200/src/app/features/map/map.component.ts\")",
+      "Bash(curl -s \"http://localhost:4200/src/app/core/services/geocoding.service.ts\")",
+      "Bash(cat /tmp/ngserve.log | grep -E \"\\(error|Error|warn|rebuilt|ready\\)\" | head -20)",
+      "Read(//tmp/**)",
+      "PowerShell($proc = Get-NetTCPConnection -LocalPort 4200 -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess; if \\($proc\\) { Stop-Process -Id $proc -Force; Write-Host \"Killed PID $proc\" } else { Write-Host \"Nothing on 4200\" })",
+      "PowerShell(Stop-Process -Id 13624 -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(& \"d:\\\\github\\\\esrimcp\\\\.specify\\\\extensions\\\\git\\\\scripts\\\\powershell\\\\auto-commit.ps1\" \"after_implement\")",
+      "Bash(git check-ignore *)"
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+// Bootstrap theme customization — override before import
+$primary: #007aff;
+$font-family-base: 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+@use 'bootstrap/scss/bootstrap';
+
+// ArcGIS widget CSS — scoped to map container
+// Imported via @arcgis/core assets path in angular.json (added during Phase 3)
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

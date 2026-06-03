@@ -1,50 +1,102 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+## Sync Impact Report
+
+**Version change**: (template) → 1.0.0
+**Modified principles**: N/A (initial ratification)
+**Added sections**: Core Principles, Tech Stack & Standards, Development Workflow, Governance
+**Removed sections**: None
+**Templates requiring updates**:
+  - ✅ .specify/templates/plan-template.md — Constitution Check gates reference these principles
+  - ✅ .specify/templates/spec-template.md — requirements align with Angular/Bootstrap/ESRI MCP constraints
+  - ✅ .specify/templates/tasks-template.md — task phases reflect Angular module setup, ESRI MCP wiring, Bootstrap theming
+  - ⚠ .specify/templates/commands/ — no command templates found at expected path; no changes needed
+**Deferred TODOs**: None
+-->
+
+# ESRI MCP Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Angular Component Architecture
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+All UI MUST be built as Angular components following the single-responsibility principle.
+Each component MUST encapsulate its own template, styles, and logic with no direct DOM
+manipulation outside of Angular lifecycle hooks. Modules MUST be organized by feature
+domain (e.g., map, auth, shared). Lazy loading MUST be applied to all non-critical feature
+modules. Components MUST communicate via @Input/@Output bindings or injectable services;
+direct component-to-component references across feature boundaries are prohibited.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. Bootstrap-First UI
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+All layout and styling MUST use Bootstrap utility classes and components as the primary
+styling mechanism. Custom CSS MUST be scoped to component style files and introduced only
+when Bootstrap cannot satisfy the requirement. The Bootstrap theme MUST be configured
+centrally via SCSS variables; ad-hoc color/spacing overrides in component files are
+prohibited. Responsive breakpoints MUST follow Bootstrap's grid system (xs/sm/md/lg/xl/xxl).
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### III. ESRI MCP Integration
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+All geospatial operations (map rendering, feature queries, spatial analysis, geocoding)
+MUST be performed through the ESRI Model Context Protocol (MCP) client. Direct calls to
+ArcGIS REST APIs or the ArcGIS Maps SDK bypassing the MCP layer are prohibited. Map
+views MUST be managed as Angular services wrapping MCP sessions to ensure proper
+lifecycle management (initialization, cleanup on component destroy). ESRI MCP tool
+invocations MUST be typed using generated or hand-authored interface definitions; raw
+`any` types for MCP responses are prohibited.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### IV. Test-First Development (NON-NEGOTIABLE)
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+Tests MUST be written before implementation for all new Angular services, components with
+business logic, and ESRI MCP integration layers. The Red-Green-Refactor cycle is strictly
+enforced: tests must fail first, then implementation makes them pass, then refactor.
+Unit tests MUST use Jasmine/Karma (or Jest if configured). Integration tests covering
+MCP interactions MUST use real MCP sessions or contract-level fakes — mock-only MCP tests
+are prohibited for integration test suites. Component tests MUST cover all @Input/@Output
+contracts.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### V. Observability & Accessibility
+
+All ESRI MCP tool calls MUST be wrapped with structured logging (timestamp, tool name,
+parameters, response status). Angular error boundaries MUST capture and log unhandled
+component errors. The UI MUST conform to WCAG 2.1 AA: all interactive elements require
+accessible labels, map canvases MUST provide text alternatives or descriptions, keyboard
+navigation MUST be tested for all workflows.
+
+## Tech Stack & Standards
+
+- **Framework**: Angular (latest stable LTS) — strict mode enabled, standalone components preferred
+- **UI Library**: Bootstrap 5.x via `ng-bootstrap` or direct SCSS import; no jQuery dependency
+- **Geospatial**: ESRI MCP client — version pinned and reviewed on each upgrade
+- **Language**: TypeScript — strict null checks enforced, `noImplicitAny: true`
+- **State Management**: Angular Signals or NgRx for shared state; component-local state via reactive forms or signals
+- **Build**: Angular CLI with `ng build --configuration production`; bundle budgets enforced
+- **Linting**: ESLint with Angular schematic rules; Prettier for formatting
+- **Package Manager**: npm with `package-lock.json` committed
+
+## Development Workflow
+
+- Feature branches MUST follow the naming convention `###-feature-name` (sequential numbering)
+- All pull requests MUST include: passing tests, lint clean, no new TypeScript errors
+- Constitution Check (plan-template gate) MUST be completed before implementation begins
+- ESRI MCP dependency upgrades MUST include a regression test run against integration tests
+- Secrets (API keys, MCP credentials) MUST never be committed; use environment files
+  excluded from version control and documented in README
+- Commits MUST be atomic and reference the feature branch; squash-merge to main preferred
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes all other project conventions. Any deviation requires
+explicit justification recorded in `plan.md` under the Complexity Tracking section.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Amendment procedure**: Propose change in a PR modifying this file. The version MUST be
+bumped according to semantic versioning (MAJOR/MINOR/PATCH). Affected templates and docs
+MUST be updated in the same PR.
+
+**Compliance review**: Every `plan.md` MUST include a Constitution Check section
+confirming compliance with all five principles before Phase 0 research begins, and
+re-checked after Phase 1 design.
+
+**Version policy**: MAJOR = principle removed or redefined incompatibly; MINOR = new
+principle or section added; PATCH = clarification or wording fix.
+
+**Version**: 1.0.0 | **Ratified**: 2026-06-03 | **Last Amended**: 2026-06-03
