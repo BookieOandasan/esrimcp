@@ -1,0 +1,9 @@
+bin/
+obj/
+*.user
+*.suo
+.vs/
+appsettings.*.local.json
+appsettings.Development.local.json
+_publish/
+*.DotSettings.user

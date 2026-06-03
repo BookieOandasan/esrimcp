@@ -1,0 +1,6 @@
+@EsriMcp.Api_HostAddress = http://localhost:5029
+
+GET {{EsriMcp.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
