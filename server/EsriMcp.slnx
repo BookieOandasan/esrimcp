@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="EsriMcp.Api.Tests/EsriMcp.Api.Tests.csproj" />
+  <Project Path="EsriMcp.Api/EsriMcp.Api.csproj" />
+</Solution>

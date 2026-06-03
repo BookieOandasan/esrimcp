@@ -1,6 +1,6 @@
 {
   "esriApiKey": "${ESRI_API_KEY}",
-  "mcpServerUrl": "${ESRI_MCP_SERVER_URL}",
+  "mcpServerUrl": "http://localhost:5000/mcp",
   "mapDefaultCenter": [-98.5795, 39.8283],
   "mapDefaultZoom": 4
 }
