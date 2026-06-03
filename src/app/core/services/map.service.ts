@@ -34,6 +34,7 @@ export class MapService {
       ]);
 
       esriConfig.apiKey = cfg.esriApiKey;
+      esriConfig.log.level = 'error'; // suppress FBO resize + tile rendering noise
 
       const map = new ArcGISMap({ basemap: 'arcgis/navigation' });
       const center = cfg.mapDefaultCenter ?? [-98.5795, 39.8283];
