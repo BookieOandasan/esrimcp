@@ -22,7 +22,14 @@
       "PowerShell($proc = Get-NetTCPConnection -LocalPort 4200 -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess; if \\($proc\\) { Stop-Process -Id $proc -Force; Write-Host \"Killed PID $proc\" } else { Write-Host \"Nothing on 4200\" })",
       "PowerShell(Stop-Process -Id 13624 -Force -ErrorAction SilentlyContinue)",
       "PowerShell(& \"d:\\\\github\\\\esrimcp\\\\.specify\\\\extensions\\\\git\\\\scripts\\\\powershell\\\\auto-commit.ps1\" \"after_implement\")",
-      "Bash(git check-ignore *)"
+      "Bash(git check-ignore *)",
+      "Bash(gh repo *)",
+      "Bash(gh api *)",
+      "Bash(git remote *)",
+      "Bash(git fetch *)",
+      "Bash(git branch *)",
+      "PowerShell(.specify/extensions/git/scripts/powershell/create-new-feature.ps1 -Json -ShortName \"dotnet-webapi-esri-mcp\" \"create webapi dotnet c# move ESRI MCP to webapi\")",
+      "PowerShell($env:ESRI__ApiKey = \"AAPTaRjRS34vKR2crRtJ1254sug..4MXc9M90oO3i0ckzYNcqBQJx23hU9GJJSmefesa9wQ15fiTCzXBYhc1FccFwbEq2X_WIzTCA-aEZNQVS2t1Tt1ui86NRfM_wd0pQCSXV62kUkMkusRaj8SZt1_eBRaPK-Y92WojGWXCckeMcGtWP_huYk_WRvfSyH0WkEkZfyryg5asVYNsHMU_cttkOa68ucklw4NFReS0bx56kca80yPg5bC57eYYCRXSUGoXtr5FoppbNl831AT1_E5SupWv3\"; cd d:\\\\github\\\\esrimcp; dotnet run --project server/EsriMcp.Api)"
     ]
   }
 }
